@@ -1,0 +1,34 @@
+{
+  "name": "Wizyta zwierzaka",
+  "short_name": "Zwierzak",
+  "description": "Wybierz wesołe zwierzątko i zobacz je w swoim pokoju. Bez konta, bez reklam, bez śledzenia.",
+  "lang": "pl",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#EAF2FF",
+  "theme_color": "#EAF2FF",
+  "categories": ["education", "kids", "entertainment"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

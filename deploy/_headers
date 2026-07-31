@@ -1,0 +1,29 @@
+# Netlify / Cloudflare Pages: umieść ten plik w katalogu głównym strony.
+# Wariant A (wersja bez modeli 3D, bez źródeł zewnętrznych).
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self'; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), xr-spatial-tracking=(self), accelerometer=(self), gyroscope=(self), magnetometer=(), payment=(), usb=(), midi=(), display-capture=(), browsing-topics=(), interest-cohort=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: public, max-age=0, must-revalidate
+
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ---------------------------------------------------------------------------
+# Wariant B: <model-viewer> z CDN zamiast z katalogu vendor/.
+# Wtedy dostosuj APP_SETTINGS.modelViewerUrl i użyj tej CSP:
+#
+# Content-Security-Policy: default-src 'self'; script-src 'self' https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self' https://ajax.googleapis.com; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+#
+# Uwaga: <model-viewer> tworzy własne style w Shadow DOM. Zależnie od wersji
+# wymaga to style-src 'unsafe-inline'. Kto chce tego uniknąć, hostuje
+# bibliotekę sam w katalogu vendor/ i zostaje przy wariancie A.
