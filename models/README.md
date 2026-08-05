@@ -39,32 +39,44 @@ W `js/animals.js` włączony jest tylko `usdz`. Aby użyć `lew.glb` na Androidz
 trzeba najpierw umieścić `model-viewer.min.js` w katalogu `vendor/`.
 
 ---
-
 ## Sarna – model zewnętrzny
 
 Źródło: **Quaternius**, licencja **CC0** (domena publiczna, bez obowiązku
-podawania autora). Oryginał zawierał szkielet z 46 kośćmi i 26 animacji.
+podawania autora). Oryginał: szkielet z 46 kośćmi, 26 animacji.
 
 Wprowadzone zmiany:
 
-1. **Usunięto animacje nieodpowiednie dla dzieci** – `Death`, `Attack_Headbutt`,
-   `Attack_Kick`, `Idle_HitReact_Left`, `Idle_HitReact_Right`. W GLB zostały
-   tylko: `Idle_2`, `Idle`, `Idle_Headlow`, `Eating`, `Walk`. To nie jest
-   kosmetyka: `<model-viewer>` pozwala przełączać animacje, więc obecność
-   sceny śmierci w pliku byłaby realnym ryzykiem.
+1. **Usunięto animacje nieodpowiednie dla dzieci** – `Death`,
+   `Attack_Headbutt`, `Attack_Kick` i obie reakcje na uderzenie. W GLB zostały
+   `Idle_2`, `Idle`, `Idle_Headlow`, `Eating`, `Walk`. To nie kosmetyka:
+   `<model-viewer>` pozwala przełączać animacje, więc scena śmierci w pliku
+   byłaby realnie dostępna.
 2. **Usunięto duplikaty** – każda animacja występowała dwa razy, także pod
    nazwą z przedrostkiem `AnimalArmature|`.
-3. **Poprawiono skalę** – oryginał miał wysokość 4,3 jednostki. Dodany węzeł
-   nadrzędny skaluje model do **1,0 m** i stawia kopyta dokładnie na Y = 0.
-4. **USDZ** – iOS dostaje animację `Idle_2` „zapieczoną” w wierzchołkach
-   (`points.timeSamples`, 20 klatek, 6 kl./s, interpolacja liniowa po stronie
-   USD). Model jest obrócony o 180°, bo Quick Look ustawia kamerę po stronie +Z.
+3. **Poprawiono skalę** – oryginał miał wysokość 4,3 jednostki. Model jest
+   sprowadzony do **1,0 m**, kopyta stoją na Y = 0.
+4. **USDZ zapisany jako UsdSkel** – prawdziwy szkielet, nie zapieczone
+   wierzchołki. Animacja `Idle_2`, 81 klatek, 24 kl./s, pętla domknięta.
 
 | Plik | Rozmiar | Przeznaczenie |
 |---|---|---|
-| `sarna.usdz` | 2,3 MB | iOS AR Quick Look |
+| `sarna.usdz` | 816 KB | iOS AR Quick Look |
 | `sarna.glb` | 416 KB | Android (wymaga `vendor/model-viewer.min.js`) |
 
-USDZ jest duży, bo animacja zapisana w wierzchołkach powtarza całą geometrię
-w każdej klatce. Zamiennik – `UsdSkel` – dałby ok. 300 KB, ale jest znacznie
-bardziej podatny na błędy zapisu. Model ładuje się dopiero po wybraniu sarny.
+### Pułapki, na które warto uważać przy kolejnych modelach
+
+**Kierunek.** AR Quick Look ustawia kamerę po stronie **+Z**, więc model musi
+patrzeć w +Z. Konwencja glTF jest odwrotna (−Z), dlatego modele własne trzeba
+obrócić o 180°, a pobrane – najpierw sprawdzić. Ta sarna patrzyła już w +Z
+i obrót był zbędny.
+
+**Przestrzeń szkieletu.** W tym pliku `inverseBindMatrices` **nie** zawierały
+transformacji węzłów nadrzędnych, mimo że armatura miała skalę 100 i obrót
+Z-up → Y-up. Dlatego `bindTransforms` i `restTransforms` zapisano bez zmian,
+a całe przejście do świata trafiło do `xformOp:transform` obejmującego
+`SkelRoot`. W innych plikach bywa odwrotnie – warto to sprawdzić liczbowo,
+porównując skinning policzony z zapisanych danych z oryginałem.
+
+**Animacja zapieczona w wierzchołkach** (`points.timeSamples`) nie jest
+odtwarzana przez Quick Look. Dla modeli ze szkieletem jedyną działającą drogą
+jest UsdSkel.
