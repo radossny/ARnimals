@@ -9,6 +9,7 @@
  */
 
 import { APP_SETTINGS, hasModel } from './animals.js';
+import { animalSvgDataUrl } from './placeholders.js';
 
 let libraryPromise = null;
 
@@ -79,11 +80,18 @@ export class ArStage {
       this.quickLookAnchor = document.createElement('a');
       this.quickLookAnchor.rel = 'ar';
       this.quickLookAnchor.href = animal.usdz;
+      this.quickLookAnchor.className = 'quick-look-preview';
+
+      // Safari wymaga dokładnie jednego elementu <img> w środku odnośnika.
+      // Pusty src rozwiązałby się do adresu strony i dałby zepsuty obrazek,
+      // dlatego zawsze podstawiamy działające źródło.
       const preview = document.createElement('img');
       preview.alt = animal.altText;
-      preview.src = animal.preview || '';
+      preview.src = animal.preview || animal.sprite || animalSvgDataUrl(animal);
       this.quickLookAnchor.append(preview);
-      this.quickLookAnchor.hidden = true;
+
+      // Odnośnik zostaje widoczny: atrybut hidden potrafi uniemożliwić
+      // uruchomienie Quick Look, a podgląd i tak jest tu potrzebny.
       this.host.append(this.quickLookAnchor);
       return true;
     }

@@ -72,8 +72,10 @@ export const ANIMALS = [
     idle: 'bob',
     preview: null,
     sprite: null,
+    // glb wymaga biblioteki w vendor/model-viewer.min.js.
+    // Dopóki jej nie ma, zostaw null – inaczej AR w ogóle się nie uruchomi.
     glb: null,
-    usdz: null,
+    usdz: 'models/lew.usdz',
     modelScale: 1.1
   },
   {
