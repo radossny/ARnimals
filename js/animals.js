@@ -135,6 +135,21 @@ export const ANIMALS = [
     modelScale: 0.7
   },
   {
+    id: 'deer',
+    name: 'Sarna',
+    altText: 'Sarna, która spokojnie się rozgląda',
+    color: '#EFE2D2',
+    palette: { primary: '#C08A5A', secondary: '#8A5E38', accent: '#FFF3E4' },
+    shape: 'generic',
+    idle: 'sway',
+    preview: null,
+    sprite: null,
+    // glb wymaga biblioteki w vendor/model-viewer.min.js
+    glb: null,
+    usdz: 'models/sarna.usdz',
+    modelScale: 1.0
+  },
+  {
     id: 'rabbit',
     name: 'Królik',
     altText: 'Królik z długimi uszami',
