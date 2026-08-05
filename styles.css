@@ -383,6 +383,18 @@ svg.animal-art {
   touch-action: none;
   cursor: grab;
   will-change: transform;
+  /* iOS: bez tego przytrzymanie palca otwiera menu obrazka („Zapisz zdjęcie”)
+     i przerywa przeciąganie w połowie gestu. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Dotknięcia trafiają zawsze w uchwyt, nigdy w sam rysunek. */
+.animal-art-wrap,
+.animal-art-wrap * {
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 .animal-handle.is-grabbed { cursor: grabbing; }
@@ -456,6 +468,17 @@ svg.animal-art {
 /* ---------------------------------------------------------------- Tryb AR */
 
 .ar-host { position: absolute; inset: 0; }
+
+/* Podgląd dla ścieżki AR Quick Look (iOS, gdy jest tylko USDZ). */
+.quick-look-preview {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: min(60vw, 260px);
+}
+.quick-look-preview img { display: block; width: 100%; height: auto; }
 .ar-host .model-viewer,
 .ar-host model-viewer { width: 100%; height: 100%; background: #0D1526; }
 
