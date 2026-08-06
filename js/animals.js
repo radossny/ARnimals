@@ -146,7 +146,7 @@ export const ANIMALS = [
     sprite: null,
     // glb wymaga biblioteki w vendor/model-viewer.min.js
     glb: null,
-    usdz: 'models/sarna-2.usdz',
+    usdz: 'models/sarna-anim.usdz',
     modelScale: 1.0
   },
   {
